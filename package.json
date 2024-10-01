@@ -1,21 +1,21 @@
 {
-  "name": "@ghasemkiani/web3",
-  "version": "1.0.0",
-  "type": "module",
-  "main": "index.js",
-  "exports": {
-    ".": "./index.js"
-  },
-  "scripts": {
-    "test": "node --test"
-  },
-  "keywords": [],
-  "author": "Ghasem Kiani",
-  "license": "MIT",
-  "description": "",
-  "dependencies": {
-    "@ghasemkiani/base": "github:ghasemkiani/base",
-    "decimal.js": "^10.4.3",
-    "web3": "^4.13.0"
-  }
+	"name": "@ghasemkiani/web3",
+	"version": "1.0.1",
+	"type": "module",
+	"main": "index.js",
+	"exports": {
+		".": "./index.js"
+	},
+	"scripts": {
+		"test": "node --test"
+	},
+	"keywords": [],
+	"author": "Ghasem Kiani",
+	"license": "MIT",
+	"description": "",
+	"dependencies": {
+		"@ghasemkiani/base": "github:ghasemkiani/base",
+		"decimal.js": "^10.4.3",
+		"web3": "^4.13.0"
+	}
 }

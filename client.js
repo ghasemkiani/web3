@@ -4,7 +4,7 @@ import { Web3 } from "web3";
 import { cutil } from "@ghasemkiani/base";
 import { Obj } from "@ghasemkiani/base";
 
-d.config({precision: 200});
+d.config({ precision: 200 });
 const ds = (bi) => d(String(bi));
 
 class Client extends Obj {
@@ -62,7 +62,7 @@ class Client extends Obj {
   }
   async toGetGasLimit$() {
     let client = this;
-    let {gasLimit} = await client.toGetBlock("latest");
+    let { gasLimit } = await client.toGetBlock("latest");
     return ds(gasLimit);
   }
   async toGetGasLimit() {
