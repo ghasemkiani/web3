@@ -32,7 +32,7 @@ class Client extends Obj {
   }
   async toGetChainId() {
     let client = this;
-    return client.toGetChainId$().toNumber();
+    return (await client.toGetChainId$()).toNumber();
   }
   async toGetGasPrice$() {
     let client = this;
@@ -42,7 +42,7 @@ class Client extends Obj {
   }
   async toGetGasPrice() {
     let client = this;
-    return client.toGetGasPrice$().toNumber();
+    return (await client.toGetGasPrice$()).toNumber();
   }
   async toGetBlockNumber$() {
     let client = this;
@@ -52,7 +52,7 @@ class Client extends Obj {
   }
   async toGetBlockNumber() {
     let client = this;
-    return client.toGetBlockNumber$().toNumber();
+    return (await client.toGetBlockNumber$()).toNumber();
   }
   async toGetBlock(blockNumber = "latest") {
     let client = this;
@@ -67,7 +67,7 @@ class Client extends Obj {
   }
   async toGetGasLimit() {
     let client = this;
-    return client.toGetGasLimit$().toNumber();
+    return (await client.toGetGasLimit$()).toNumber();
   }
 }
 
