@@ -69,6 +69,28 @@ class Client extends Obj {
     let client = this;
     return (await client.toGetGasLimit$()).toNumber();
   }
+  async toGetTransactionCount$(address, defaultBlock = "latest") {
+    let client = this;
+    let { web3 } = client;
+    let transactionCount = await web3.eth.getTransactionCount(
+      address,
+      defaultBlock,
+    );
+    return ds(transactionCount);
+  }
+  async toGetTransactionCount(address, defaultBlock = "latest") {
+    let client = this;
+    return (await client.toGetTransactionCount$(address, defaultBlock)).toNumber();
+  }
+  async toGetTransactionFromBlock(hashStringOrNumber, indexNumber) {
+    let client = this;
+    let { web3 } = client;
+    let tx = await web3.eth.getTransactionFromBlock(
+      hashStringOrNumber,
+      indexNumber,
+    );
+    return tx;
+  }
 }
 
 export { Client };
