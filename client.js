@@ -17,7 +17,7 @@ class Client extends Obj {
 
   get web3() {
     if (cutil.na(this._web3)) {
-      this._web3 = new Web3(...cutil.a(this.provider) ? [this.provider] : []);
+      this._web3 = new Web3(...(cutil.a(this.provider) ? [this.provider] : []));
     }
     return this._web3;
   }
@@ -103,10 +103,6 @@ class Client extends Obj {
     let client = this;
     return client.toWei$(amount).toFixed(0);
   }
-  toWei(amount) {
-    let value = Web3.utils.toWei(cutil.asString(amount), "ether");
-    return value;
-  }
   async toGetTransactionCount$(address, defaultBlock = "latest") {
     let client = this;
     let { web3 } = client;
@@ -118,7 +114,9 @@ class Client extends Obj {
   }
   async toGetTransactionCount(address, defaultBlock = "latest") {
     let client = this;
-    return (await client.toGetTransactionCount$(address, defaultBlock)).toNumber();
+    return (
+      await client.toGetTransactionCount$(address, defaultBlock)
+    ).toNumber();
   }
   async toGetTransactionFromBlock(hashStringOrNumber, indexNumber) {
     let client = this;
@@ -129,15 +127,49 @@ class Client extends Obj {
     );
     return tx;
   }
+  async toGetTransactionReceipt(hash) {
+    let client = this;
+    let { web3 } = client;
+    let receipt = await web3.eth.getTransactionReceipt(hash);
+    return receipt;
+  }
+  async toSendSignedTransaction(rawTransaction) {
+    let client = this;
+    let { web3 } = client;
+    let receipt = await web3.eth.sendSignedTransaction(rawTransaction);
+    return receipt;
+  }
+  async toGetBlockTimeSec(n = 10000) {
+    let client = this;
+    let { web3 } = client;
+    let currentBlock = await this.toGetBlockNumber();
+    let { timestamp: timestamp1 } = await client.toGetBlock(currentBlock);
+    let { timestamp: timestamp0 } = await client.toGetBlock(currentBlock - n);
+    let blockTimeSec =
+      (cutil.asNumber(timestamp1) - cutil.asNumber(timestamp0)) / n;
+    return blockTimeSec;
+  }
+  async toGetTransaction(hash) {
+    let client = this;
+    let { web3 } = client;
+    let tx = await web3.eth.getTransaction(hash);
+    return tx;
+  }
+  async toGetPendingTransactions() {
+    let client = this;
+    let { web3 } = client;
+    let txs = await web3.eth.getPendingTransactions();
+    return txs;
+  }
   encodeEventSignature(itemSignature) {
     let client = this;
     let { web3 } = client;
-    return web3.eth.abi.encodeEventSignature(itemSignature);;
+    return web3.eth.abi.encodeEventSignature(itemSignature);
   }
   encodeFunctionSignature(itemSignature) {
     let client = this;
     let { web3 } = client;
-    return web3.eth.abi.encodeFunctionSignature(itemSignature);;
+    return web3.eth.abi.encodeFunctionSignature(itemSignature);
   }
   functionData(func, ...rest) {
     let client = this;
@@ -165,5 +197,19 @@ class Client extends Obj {
     return { event, address, decoded };
   }
 }
+
+const iwclient = {
+  provider: null,
+  get client() {
+    if (cutil.na(this._client)) {
+      let { provider } = this;
+      this._client = new Client({ provider });
+    }
+    return this._client;
+  },
+  set client(client) {
+    this._client = client;
+  },
+};
 
 export { Client };

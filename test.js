@@ -1,9 +1,14 @@
 import test from "node:test";
 import assert from "node:assert";
 
+import d from "decimal.js";
+
 import { cutil } from "@ghasemkiani/base";
 import { Obj } from "@ghasemkiani/base";
 import { Client } from "@ghasemkiani/web3";
+
+const address1 = "0x009a711364f8127ef4c20a7aa81323b78e976b46";
+const address2 = "0x9ae928c5500ee2645c54a98288986d7b14bec037";
 
 test("web3 field member should be created", async (t) => {
   let client = new Client();
@@ -80,9 +85,8 @@ test("toGetBlock - 0", async (t) => {
 test("toEstimateGas$", async (t) => {
   let client = new Client();
   let tx = {
-    // from: "0x009a711364f8127ef4c20a7aa81323b78e976b46",
     from: null,
-    to: "0x9ae928c5500ee2645c54a98288986d7b14bec037",
+    to: address2,
     value: 1e22,
   };
   let gas$ = await client.toEstimateGas$(tx);
@@ -92,12 +96,50 @@ test("toEstimateGas$", async (t) => {
 test("toEstimateGas", async (t) => {
   let client = new Client();
   let tx = {
-    // from: "0x009a711364f8127ef4c20a7aa81323b78e976b46",
     from: null,
-    to: "0x9ae928c5500ee2645c54a98288986d7b14bec037",
+    to: address2,
     value: 1e22,
   };
   let gas = await client.toEstimateGas(tx);
   assert.ok(gas);
 });
 
+test("fromWei$", async (t) => {
+  let client = new Client();
+  let value = d(1e22).toFixed(0);
+  let amount$ = client.fromWei$(value);
+  assert.strictEqual(amount$.eq(1e4), true);
+});
+
+test("fromWei", async (t) => {
+  let client = new Client();
+  let value = d(1e22).toFixed(0);
+  let amount = client.fromWei(value);
+  assert.strictEqual(amount, 1e4);
+});
+
+test("toWei$", async (t) => {
+  let client = new Client();
+  let amount = d(1e4).toFixed(0);
+  let value$ = client.toWei$(amount);
+  assert.strictEqual(value$.eq(1e22), true);
+});
+
+test("toWei", async (t) => {
+  let client = new Client();
+  let amount = d(1e4).toFixed(0);
+  let value = client.toWei(amount);
+  assert.strictEqual(value, d(1e22).toFixed(0));
+});
+
+test("toGetTransactionCount$", async (t) => {
+  let client = new Client();
+  let transactionCount$ = await client.toGetTransactionCount$(address1);
+  assert.strictEqual(transactionCount$.eq(0), true);
+});
+
+test("toGetTransactionCount", async (t) => {
+  let client = new Client();
+  let transactionCount = await client.toGetTransactionCount(address1);
+  assert.strictEqual(transactionCount, 0);
+});
