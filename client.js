@@ -24,7 +24,7 @@ class Client extends Obj {
 
   get web3() {
     if (cutil.na(this._web3)) {
-      this._web3 = new Web3(...(cutil.a(this.provider) ? [this.provider] : []));
+      this._web3 = Client.create(this.provider);
     }
     return this._web3;
   }
@@ -203,6 +203,27 @@ class Client extends Obj {
     );
     return { event, address, decoded };
   }
+  isAddress(address) {
+    let client = this;
+    let { web3 } = client;
+    return web3.utils.isAddress(address);
+  }
+  asChecksumAddress(address) {
+    let client = this;
+    let { web3 } = client;
+    return web3.utils.toChecksumAddress(address);
+  }
+  async toGetPastLogs({ fromBlock, toBlock, address, topics }) {
+    let client = this;
+    let { web3 } = client;
+    return await web3.eth.getPastLogs({ fromBlock, toBlock, address, topics });
+  }
+  async toGetCode(...args) {
+    let client = this;
+    let { web3 } = client;
+    // let [address, defaultBlock] = args;
+    return await web3.eth.getCode(...args);
+  }
 }
 
 const iwclient = {
@@ -219,4 +240,4 @@ const iwclient = {
   },
 };
 
-export { Client };
+export { Client, iwclient };
