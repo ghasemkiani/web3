@@ -224,6 +224,36 @@ class Client extends Obj {
     // let [address, defaultBlock] = args;
     return await web3.eth.getCode(...args);
   }
+  privateKeyToAddress(privateKey) {
+    let client = this;
+    let { web3 } = client;
+    return web3.eth.accounts.privateKeyToAccount(privateKey).address;
+  }
+  async toGetBalance$(address) {
+    let client = this;
+    let { web3 } = client;
+    let balance = await web3.eth.getBalance(address);
+    return ds(balance);
+  }
+  async toGetBalance_(address) {
+    let client = this;
+    return (await client.toGetBalance$(address)).toFixed(0);
+  }
+  async toSignTransaction(transactionObject, key) {
+    let client = this;
+    let { web3 } = client;
+    let result = await web3.eth.accounts.signTransaction(
+      transactionObject,
+      key,
+    );
+    return result;
+  }
+  async toSign(dataToSign, address) {
+    let client = this;
+    let { web3 } = client;
+    let signedData = await web3.eth.sign(dataToSign, address);
+    return signedData;
+  }
 }
 
 const iwclient = {
