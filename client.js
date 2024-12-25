@@ -1,11 +1,8 @@
-import d from "decimal.js";
 import { Web3 } from "web3";
 
 import { cutil } from "@ghasemkiani/base";
 import { Obj } from "@ghasemkiani/base";
-
-d.config({ precision: 200 });
-const ds = (bi) => d(String(bi));
+import { d } from "@ghasemkiani/decimal";
 
 class Client extends Obj {
   static {
@@ -39,7 +36,7 @@ class Client extends Obj {
     let client = this;
     let { web3 } = client;
     let id = await web3.eth.getChainId();
-    return ds(id);
+    return d(id);
   }
   async toGetChainId() {
     let client = this;
@@ -49,7 +46,7 @@ class Client extends Obj {
     let client = this;
     let { web3 } = client;
     let gasPrice = await web3.eth.getGasPrice();
-    return ds(gasPrice);
+    return d(gasPrice);
   }
   async toGetGasPrice() {
     let client = this;
@@ -59,7 +56,7 @@ class Client extends Obj {
     let client = this;
     let { web3 } = client;
     let blockNumber = await web3.eth.getBlockNumber();
-    return ds(blockNumber);
+    return d(blockNumber);
   }
   async toGetBlockNumber() {
     let client = this;
@@ -74,7 +71,7 @@ class Client extends Obj {
   async toGetGasLimit$() {
     let client = this;
     let { gasLimit } = await client.toGetBlock("latest");
-    return ds(gasLimit);
+    return d(gasLimit);
   }
   async toGetGasLimit() {
     let client = this;
@@ -84,7 +81,7 @@ class Client extends Obj {
     let client = this;
     let { web3 } = client;
     let gas = await web3.eth.estimateGas(tx);
-    return ds(gas);
+    return d(gas);
   }
   async toEstimateGas(tx) {
     let client = this;
@@ -94,7 +91,7 @@ class Client extends Obj {
     let client = this;
     let { web3 } = client;
     let amount = web3.utils.fromWei(cutil.asString(value), "ether");
-    return ds(amount);
+    return d(amount);
   }
   fromWei(value) {
     let client = this;
@@ -104,7 +101,7 @@ class Client extends Obj {
     let client = this;
     let { web3 } = client;
     let value = web3.utils.toWei(cutil.asString(amount), "ether");
-    return ds(value);
+    return d(value);
   }
   toWei(amount) {
     let client = this;
@@ -117,7 +114,7 @@ class Client extends Obj {
       address,
       defaultBlock,
     );
-    return ds(transactionCount);
+    return d(transactionCount);
   }
   async toGetTransactionCount(address, defaultBlock = "latest") {
     let client = this;
@@ -233,7 +230,7 @@ class Client extends Obj {
     let client = this;
     let { web3 } = client;
     let balance = await web3.eth.getBalance(address);
-    return ds(balance);
+    return d(balance);
   }
   async toGetBalance_(address) {
     let client = this;

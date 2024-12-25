@@ -1,11 +1,10 @@
 import test from "node:test";
 import assert from "node:assert";
 
-import d from "decimal.js";
-
 import { cutil } from "@ghasemkiani/base";
 import { Obj } from "@ghasemkiani/base";
 import { Client } from "@ghasemkiani/web3";
+import { d } from "@ghasemkiani/decimal";
 
 const address1 = "0x009a711364f8127ef4c20a7aa81323b78e976b46";
 const address2 = "0x9ae928c5500ee2645c54a98288986d7b14bec037";

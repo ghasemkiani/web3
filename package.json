@@ -1,6 +1,6 @@
 {
 	"name": "@ghasemkiani/web3",
-	"version": "1.1.4",
+	"version": "1.2.0",
 	"type": "module",
 	"main": "index.js",
 	"exports": {
@@ -15,7 +15,7 @@
 	"description": "",
 	"dependencies": {
 		"@ghasemkiani/base": "github:ghasemkiani/base",
-		"decimal.js": "^10.4.3",
+		"@ghasemkiani/decimal": "github:ghasemkiani/decimal",
 		"web3": "^4.13.0"
 	}
 }
