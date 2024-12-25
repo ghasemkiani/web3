@@ -9,7 +9,14 @@ const ds = (bi) => d(String(bi));
 
 class Client extends Obj {
   static {
+    cutil.extend(this, {
+      Web3,
+      create(provider) {
+        return new Web3(...(cutil.a(provider) ? [provider] : []));
+      },
+    });
     cutil.extend(this.prototype, {
+      Web3,
       provider: null,
       _web3: null,
     });
