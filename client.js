@@ -186,7 +186,7 @@ class Client extends Obj {
     let { web3 } = client;
     let { address, topics, data } = log;
     let [signature, ...indexes] = topics;
-    let event = contract.abi.find((item) => item.signature === signature);
+    let event = abi.find((item) => item.signature === signature);
     if (!event) {
       return null;
     }
