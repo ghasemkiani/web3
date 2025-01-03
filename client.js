@@ -181,12 +181,10 @@ class Client extends Obj {
     let data = web3.eth.abi.encodeFunctionCall(func, rest);
     return data;
   }
-  async toDecodeLog(scan, log, logError = false) {
+  async toDecodeLog(abi, log, logError = false) {
     let client = this;
     let { web3 } = client;
     let { address, topics, data } = log;
-    let abi = await scan.toGetContractAbi(address, logError);
-    abi = chain.addSignatures(abi);
     let [signature, ...indexes] = topics;
     let event = contract.abi.find((item) => item.signature === signature);
     if (!event) {
